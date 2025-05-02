@@ -2,9 +2,13 @@
   import svelteLogo from './assets/svelte.svg'
   import viteLogo from '/vite.svg'
   import Counter from './lib/Counter.svelte'
+  import ThemeToggle from './components/ThemeToggle.svelte'
 </script>
 
 <main>
+  <div class="theme-toggle">
+    <ThemeToggle />
+  </div>
   <div>
     <a href="https://vite.dev" target="_blank" rel="noreferrer">
       <img src={viteLogo} class="logo" alt="Vite Logo" />
@@ -29,6 +33,12 @@
 </main>
 
 <style>
+  .theme-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10;
+  }
   .logo {
     height: 6em;
     padding: 1.5em;
