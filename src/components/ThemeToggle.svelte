@@ -7,9 +7,18 @@
 
   function handleThemeChange(checked: boolean) {
     isDarkMode = checked;
-    document.documentElement.setAttribute('data-theme', checked ? 'mona-dark' : 'mona');
+    const mode = checked ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-mode', mode);
+    localStorage.setItem('mode', mode);
   }
 </script>
+
+<svelte:head>
+  <script>
+    const mode = localStorage.getItem('mode') || 'light';
+    document.documentElement.setAttribute('data-mode', mode);
+  </script>
+</svelte:head>
 
 <Switch
   name="theme"

@@ -2,3 +2,4 @@
 @import '@skeletonlabs/skeleton';
 @import '@skeletonlabs/skeleton/optional/presets';
 @import '@skeletonlabs/skeleton/themes/mona';
+@custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
