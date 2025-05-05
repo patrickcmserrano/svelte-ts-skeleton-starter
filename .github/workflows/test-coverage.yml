@@ -1,0 +1,74 @@
+name: Test and Coverage
+
+on:
+  push:
+    branches: [ main, master, theme-implementation ]
+  pull_request:
+    branches: [ main, master, theme-implementation ]
+
+# Adicionar permissões ao GITHUB_TOKEN
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+      
+      - name: Install Dependencies
+        run: npm ci
+      
+      - name: Run Unit Tests with Coverage
+        run: npm run test:coverage
+      
+      - name: Upload Coverage Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 7
+      
+      # Opcional: Upload para Codecov sem exigir token (funciona para repositórios públicos)
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./coverage/
+          fail_ci_if_error: false
+          # Nota: O token está removido; Codecov funcionará sem token para repos públicos
+      
+      # Install Playwright browsers
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      
+      # Run Playwright tests
+      - name: Run E2E Tests
+        run: npm run e2e
+      
+      # Upload Playwright report as artifact
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+      
+      # Alternativa: Publicar diretamente no GitHub Pages
+      - name: Deploy Coverage Report to GitHub Pages
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/theme-implementation'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: coverage/
+          target-folder: coverage
+          clean: true
+          token: ${{ secrets.GITHUB_TOKEN }}
