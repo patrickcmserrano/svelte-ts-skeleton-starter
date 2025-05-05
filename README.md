@@ -1,51 +1,51 @@
 # svelte-ts-skeleton-starter
 
-Um template moderno para projetos Svelte utilizando TypeScript e Vite como bundler. Este repositório serve como ponto de partida para novos projetos Svelte com uma configuração otimizada e pronta para uso.
+A modern template for Svelte projects using TypeScript and Vite as a bundler. This repository serves as a starting point for new Svelte projects with an optimized, ready-to-use configuration.
 
-## Visão Geral
+## Overview
 
-Este template inclui:
-- Svelte 5 com suporte a TypeScript
-- Vite para desenvolvimento rápido e build otimizado
-- Integração com Skeleton UI
-- Configuração de tema claro/escuro
-- Estrutura de projeto organizada
-- Suporte à internacionalização (i18n)
-- Testes unitários e E2E abrangentes
-- CI/CD com GitHub Actions para deploy no GitHub Pages
+This template includes:
+- Svelte 5 with TypeScript support
+- Vite for fast development and optimized build
+- Skeleton UI integration
+- Light/dark theme configuration
+- Organized project structure
+- Internationalization (i18n) support
+- Comprehensive unit and E2E tests
+- CI/CD with GitHub Actions for GitHub Pages deployment
 
-## Criação de Projetos a partir deste Template
+## Creating Projects from this Template
 
-1. **Usando GitHub**
+1. **Using GitHub**
    ```bash
-   # Clone este template
-   gh repo create meu-projeto --template svelte-ts-skeleton-starter
-   # ou use a interface do GitHub para criar um novo repositório a partir deste template
+   # Clone this template
+   gh repo create my-project --template svelte-ts-skeleton-starter
+   # or use GitHub's interface to create a new repository from this template
    ```
 
-2. **Manualmente**
+2. **Manually**
    ```bash
-   # Clone o repositório
-   git clone https://github.com/seu-usuario/svelte-ts-skeleton-starter.git meu-projeto
+   # Clone the repository
+   git clone https://github.com/your-username/svelte-ts-skeleton-starter.git my-project
    
-   # Remova o histórico Git
-   cd meu-projeto
+   # Remove Git history
+   cd my-project
    rm -rf .git
    
-   # Inicialize um novo repositório Git
+   # Initialize a new Git repository
    git init
    ```
 
-## Criação do Projeto
+## Project Creation
 
-1. **Inicialização do Projeto**
+1. **Project Initialization**
    ```bash
    npm create vite@latest svelte-ts-skeleton-starter -- --template svelte-ts
    cd svelte-ts-skeleton-starter
    npm install
    ```
 
-2. **Estrutura do Projeto**
+2. **Project Structure**
    ```
    📦 svelte-ts-skeleton-starter
    ├── 📂 public/
@@ -69,263 +69,263 @@ Este template inclui:
    └── vite.config.ts
    ```
 
-## Dependências do Projeto
+## Project Dependencies
 
-### Dependências Principais
+### Main Dependencies
 - `svelte`: ^5.23.1
 - `@skeletonlabs/skeleton`: ^3.1.3
-- `svelte-i18n`: ^4.0.0 # Biblioteca de internacionalização
+- `svelte-i18n`: ^4.0.0 # Internationalization library
 
-### Dependências de Desenvolvimento
+### Development Dependencies
 - `@sveltejs/vite-plugin-svelte`: ^5.0.3
 - `@tsconfig/svelte`: ^5.0.4
 - `svelte-check`: ^4.1.5
 - `typescript`: ~5.7.2
 - `vite`: ^6.3.1
 
-## Scripts Disponíveis
+## Available Scripts
 
 ```json
 {
-  "dev": "vite",          // Inicia o servidor de desenvolvimento
-  "build": "vite build",  // Gera build de produção
-  "preview": "vite preview", // Prévia da versão de produção
-  "check": "svelte-check" // Executa verificação de tipos TypeScript
+  "dev": "vite",          // Starts the development server
+  "build": "vite build",  // Generates production build
+  "preview": "vite preview", // Preview production version
+  "check": "svelte-check" // Runs TypeScript type checking
 }
 ```
 
-## Configuração do Ambiente de Desenvolvimento
+## Development Environment Setup
 
-### IDE Recomendada
-- Visual Studio Code com a extensão Svelte para VS Code
+### Recommended IDE
+- Visual Studio Code with Svelte for VS Code extension
 - [VS Code](https://code.visualstudio.com/)
-- [Extensão Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
+- [Svelte Extension](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
 
-### Configuração do TypeScript
+### TypeScript Configuration
 
-O projeto utiliza TypeScript com as seguintes configurações principais:
-- Suporte total ao TypeScript em componentes Svelte
-- Configuração otimizada para desenvolvimento Svelte
-- Verificação de tipos integrada
+The project uses TypeScript with the following main configurations:
+- Full TypeScript support in Svelte components
+- Optimized configuration for Svelte development
+- Integrated type checking
 
-## Como Iniciar o Desenvolvimento
+## How to Start Development
 
-1. **Clone o repositório**
+1. **Clone the repository**
    ```bash
-   git clone [URL-DO-REPOSITÓRIO]
+   git clone [REPOSITORY-URL]
    ```
 
-2. **Instale as dependências**
+2. **Install dependencies**
    ```bash
    npm install
    ```
 
-3. **Inicie o servidor de desenvolvimento**
+3. **Start the development server**
    ```bash
    npm run dev
    ```
 
-4. **Acesse o projeto**
-   O projeto estará disponível em `http://localhost:5173`
+4. **Access the project**
+   The project will be available at `http://localhost:5173`
 
-## Estrutura de Arquivos Explicada
+## File Structure Explained
 
-- `/public`: Arquivos estáticos que serão servidos diretamente
-- `/src`: Código fonte da aplicação
-  - `/assets`: Recursos como imagens e ícones
-  - `/components`: Componentes da interface de usuário
-    - `LanguageSelector.svelte`: Componente para troca de idiomas
-    - `ThemeToggle.svelte`: Componente para alternar entre temas claro/escuro
-  - `/lib`: Componentes reutilizáveis e funcionalidades compartilhadas
-    - `i18n.ts`: Sistema de internacionalização
-    - `/locales`: Arquivos de tradução para diferentes idiomas
-      - `en.ts`: Traduções para inglês
-      - `pt.ts`: Traduções para português
-      - `es.ts`: Traduções para espanhol
-  - `/styles`: Arquivos de estilo globais
-  - `App.svelte`: Componente raiz da aplicação
-  - `main.ts`: Ponto de entrada da aplicação
+- `/public`: Static files that will be served directly
+- `/src`: Application source code
+  - `/assets`: Resources such as images and icons
+  - `/components`: User interface components
+    - `LanguageSelector.svelte`: Component for language switching
+    - `ThemeToggle.svelte`: Component for toggling between light/dark themes
+  - `/lib`: Reusable components and shared functionalities
+    - `i18n.ts`: Internationalization system
+    - `/locales`: Translation files for different languages
+      - `en.ts`: English translations
+      - `pt.ts`: Portuguese translations
+      - `es.ts`: Spanish translations
+  - `/styles`: Global style files
+  - `App.svelte`: Root application component
+  - `main.ts`: Application entry point
 
-## Considerações Técnicas
+## Technical Considerations
 
-### Por que Vite?
-- Hot Module Replacement (HMR) extremamente rápido
-- Configuração zero para começar
-- Suporte nativo a TypeScript
-- Build otimizado para produção
+### Why Vite?
+- Extremely fast Hot Module Replacement (HMR)
+- Zero configuration to start
+- Native TypeScript support
+- Optimized production build
 
 ### TypeScript
-O projeto usa TypeScript para:
-- Melhor experiência de desenvolvimento
-- Verificação de tipos em tempo real
-- Melhor suporte da IDE
-- Código mais seguro e manutenível
+The project uses TypeScript for:
+- Better development experience
+- Real-time type checking
+- Better IDE support
+- More secure and maintainable code
 
-## Testes
+## Tests
 
-Este projeto inclui uma configuração completa para testes unitários e end-to-end (E2E).
+This project includes a complete setup for unit and end-to-end (E2E) tests.
 
-### Testes Unitários
+### Unit Tests
 
-Utilizamos o [Vitest](https://vitest.dev/) para testes unitários com as seguintes características:
+We use [Vitest](https://vitest.dev/) for unit tests with the following features:
 
-- Integração com o ecossistema Svelte
-- Suporte para componentes Svelte
-- Geração de relatórios de cobertura de código
-- Ambiente de teste baseado em JSDOM
-- Testes mock para módulos externos
+- Integration with the Svelte ecosystem
+- Support for Svelte components
+- Code coverage report generation
+- JSDOM-based test environment
+- Mock tests for external modules
 
-Comandos disponíveis:
+Available commands:
 
 ```bash
-# Executar testes em modo watch (desenvolvimento)
+# Run tests in watch mode (development)
 npm test
 
-# Executar testes uma única vez
+# Run tests once
 npm run test:run
 
-# Executar testes com relatório de cobertura
+# Run tests with coverage report
 npm run test:coverage
 npm run coverage
 ```
 
-#### Testes de Internacionalização (i18n)
+#### Internationalization (i18n) Tests
 
-O sistema de internacionalização possui testes unitários abrangentes que verificam:
+The internationalization system has comprehensive unit tests that verify:
 
-- Inicialização correta do sistema de i18n
-- Detecção de idioma do navegador
-- Persistência de preferências do usuário
-- Carregamento e acesso às traduções
-- Consistência das chaves de tradução entre diferentes idiomas
-- Comportamento adequado quando chaves de tradução não existem
+- Correct initialization of the i18n system
+- Browser language detection
+- User preferences persistence
+- Loading and access to translations
+- Consistency of translation keys across different languages
+- Appropriate behavior when translation keys don't exist
 
-### Testes End-to-End (E2E)
+### End-to-End (E2E) Tests
 
-Utilizamos o [Playwright](https://playwright.dev/) para testes E2E com as seguintes características:
+We use [Playwright](https://playwright.dev/) for E2E tests with the following features:
 
-- Suporte para múltiplos navegadores (Chrome, Firefox, Safari)
-- Testes de acessibilidade
-- Relatórios detalhados de execução
-- Testes específicos para funcionalidades de internacionalização
+- Support for multiple browsers (Chrome, Firefox, Safari)
+- Accessibility tests
+- Detailed execution reports
+- Specific tests for internationalization functionalities
 
-Comandos disponíveis:
+Available commands:
 
 ```bash
-# Executar todos os testes E2E
+# Run all E2E tests
 npm run e2e
 
-# Executar testes E2E com interface visual
+# Run E2E tests with visual interface
 npm run e2e:ui
 
-# Visualizar relatório de testes E2E
+# View E2E test report
 npm run e2e:report
 ```
 
-#### Testes E2E de Internacionalização
+#### E2E Internationalization Tests
 
-Os testes E2E para internacionalização garantem que:
+The E2E tests for internationalization ensure that:
 
-- Os seletores de idioma estão presentes e funcionais na interface
-- A mudança de idioma atualiza corretamente o conteúdo da página
-- As preferências de idioma são persistidas entre recarregamentos
-- Os elementos de texto aparecem corretamente no idioma selecionado
-- A acessibilidade é mantida ao alternar entre idiomas
+- Language selectors are present and functional in the interface
+- Language changes correctly update the page content
+- Language preferences are persisted between reloads
+- Text elements appear correctly in the selected language
+- Accessibility is maintained when switching between languages
 
-Estes testes usam a abordagem baseada em papel e nome dos elementos (`getByRole`, `getByText`), o que torna os testes mais robustos e menos suscetíveis a quebras devido a mudanças na estrutura HTML ou CSS.
+These tests use an approach based on the role and name of elements (`getByRole`, `getByText`), which makes the tests more robust and less susceptible to breaking due to changes in HTML or CSS structure.
 
-### Testes de Acessibilidade
+### Accessibility Tests
 
-O projeto inclui testes específicos de acessibilidade para:
+The project includes specific accessibility tests for:
 
-- Estrutura adequada de cabeçalhos
-- Navegação por teclado
-- Atributos ARIA adequados
-- Contraste de cores
-- Acessibilidade do seletor de idiomas
+- Appropriate header structure
+- Keyboard navigation
+- Appropriate ARIA attributes
+- Color contrast
+- Language selector accessibility
 
-### Executar Todos os Testes
+### Run All Tests
 
-Para executar todos os testes (unitários e E2E) de uma só vez:
+To run all tests (unit and E2E) at once:
 
 ```bash
 npm run test:all
 ```
 
-## Build e Deploy
+## Build and Deploy
 
-### Build Local
+### Local Build
 
-Para criar uma build de produção:
+To create a production build:
 ```bash
 npm run build
 ```
 
-Isso gerará uma versão otimizada do projeto na pasta `dist/`.
+This will generate an optimized version of the project in the `dist/` folder.
 
-### Deploy Automático com GitHub Pages
+### Automated Deployment with GitHub Pages
 
-Este projeto está configurado para deploy no GitHub Pages usando GitHub Actions com uma abordagem CI/CD moderna.
+This project is configured for deployment to GitHub Pages using GitHub Actions with a modern CI/CD approach.
 
-#### Configuração do GitHub Pages
+#### GitHub Pages Configuration
 
-Para configurar o GitHub Pages no seu repositório:
+To configure GitHub Pages in your repository:
 
-1. No GitHub, vá para seu repositório e clique em **Settings**
-2. No menu lateral, clique em **Pages**
-3. Em **Source**, selecione **Deploy from a branch**
-4. Em **Branch**, selecione **gh-pages** e **/ (root)**
-5. Clique em **Save**
+1. In GitHub, go to your repository and click on **Settings**
+2. In the sidebar menu, click on **Pages**
+3. Under **Source**, select **Deploy from a branch**
+4. Under **Branch**, select **gh-pages** and **/ (root)**
+5. Click on **Save**
 
-#### Workflows de CI/CD
+#### CI/CD Workflows
 
-O projeto utiliza dois workflows separados:
+The project uses two separate workflows:
 
-1. **Build e Teste (CI)** `.github/workflows/test-coverage.yml`
-   - Acionado automaticamente em pushes para o branch `main`
-   - Acionado em pull requests para o branch `main`
-   - Compila a aplicação e executa testes
-   - Gera relatórios de cobertura de código
-   - Armazena artefatos de build para uso posterior
+1. **Build and Test (CI)** `.github/workflows/test-coverage.yml`
+   - Triggered automatically on pushes to the `main` branch
+   - Triggered on pull requests to the `main` branch
+   - Compiles the application and runs tests
+   - Generates code coverage reports
+   - Stores build artifacts for later use
    
-2. **Deploy para GitHub Pages (CD)** `.github/workflows/deploy.yml`
-   - Acionado **apenas manualmente** via Actions no GitHub
-   - Permite controle total sobre quando fazer deploy
-   - Opção para publicar também o relatório de cobertura
-   - Publica tudo no branch `gh-pages`
+2. **Deploy to GitHub Pages (CD)** `.github/workflows/deploy.yml`
+   - Triggered **only manually** via Actions in GitHub
+   - Provides complete control over when to deploy
+   - Option to also publish the coverage report
+   - Publishes everything to the `gh-pages` branch
 
-#### Como iniciar um deploy manualmente
+#### How to Start a Manual Deployment
 
-1. No GitHub, vá para seu repositório e clique na aba **Actions**
-2. No menu lateral, selecione o workflow **Deploy para GitHub Pages (CD)**
-3. Clique no botão **Run workflow**
-4. Marque ou desmarque a opção "Publicar relatório de cobertura" conforme necessário
-5. Clique em **Run workflow** para iniciar o processo de deploy
+1. In GitHub, go to your repository and click on the **Actions** tab
+2. In the sidebar menu, select the **Deploy to GitHub Pages (CD)** workflow
+3. Click on the **Run workflow** button
+4. Check or uncheck the "Publish coverage report" option as needed
+5. Click on **Run workflow** to start the deployment process
 
-#### Estrutura no branch gh-pages
+#### Structure in the gh-pages Branch
 
-Após o deploy, o branch `gh-pages` terá a seguinte estrutura:
-- `/` - Raiz com a aplicação principal
-- `/coverage/` - Relatórios de cobertura de testes (quando publicados)
+After deployment, the `gh-pages` branch will have the following structure:
+- `/` - Root with the main application
+- `/coverage/` - Test coverage reports (when published)
 
-### Esquema de Branches
+### Branch Scheme
 
-O projeto utiliza o seguinte esquema de branches:
-- `main`: Branch principal de desenvolvimento
-- `gh-pages`: Branch onde o site compilado é publicado (não edite manualmente)
+The project uses the following branch scheme:
+- `main`: Main development branch
+- `gh-pages`: Branch where the compiled site is published (do not edit manually)
 
-#### Prevenção de loops de CI/CD
+#### Prevention of CI/CD Loops
 
-Os commits de deploy incluem `[skip ci]` na mensagem para evitar que o deploy acione novos workflows, prevenindo loops infinitos.
+Deploy commits include `[skip ci]` in the message to prevent the deployment from triggering new workflows, preventing infinite loops.
 
-## Contribuindo
+## Contributing
 
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+1. Fork the project
+2. Create a branch for your feature (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Suporte
+## Support
 
-Para questões e suporte, por favor abra uma issue no repositório do projeto.
+For questions and support, please open an issue in the project repository.

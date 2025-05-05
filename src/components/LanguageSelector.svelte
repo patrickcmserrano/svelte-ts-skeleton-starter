@@ -3,15 +3,15 @@
   
   function setLanguage(lang: string) {
     locale.set(lang);
-    // Salva a preferência no localStorage
+    // Saves the preference in localStorage
     localStorage.setItem('preferredLanguage', lang);
   }
 
-  // Obtém o idioma atual
-  let currentLocale: string = 'en'; // Definido inicialmente como string
+  // Gets the current language
+  let currentLocale: string = 'en'; // Initially defined as string
   
   locale.subscribe(value => {
-    // Garante que value seja sempre string
+    // Ensures that value is always string
     if (value) {
       currentLocale = value;
     }

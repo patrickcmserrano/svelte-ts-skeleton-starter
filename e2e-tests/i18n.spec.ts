@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Testes de Internacionalização (i18n)', () => {
+test.describe('Internationalization (i18n) Tests', () => {
   test.beforeEach(async ({ page }) => {
-    // Navega para a página inicial antes de cada teste
+    // Navigate to the home page before each test
     await page.goto('/');
   });
 
-  test('deve exibir o seletor de idiomas', async ({ page }) => {
-    // Verifica se os botões de idioma estão presentes
+  test('should display the language selector', async ({ page }) => {
+    // Check if language buttons are present
     const enButton = page.getByRole('button', { name: 'English' });
     const ptButton = page.getByRole('button', { name: 'Português' });
     const esButton = page.getByRole('button', { name: 'Español' });
@@ -17,36 +17,36 @@ test.describe('Testes de Internacionalização (i18n)', () => {
     await expect(esButton).toBeVisible();
   });
 
-  test('deve permitir trocar de idioma', async ({ page }) => {
-    // Registra o texto do cabeçalho principal para comparação posterior
+  test('should allow changing the language', async ({ page }) => {
+    // Record the main heading text for later comparison
     const initialTitle = await page.getByRole('heading', { level: 1 }).textContent();
     
-    // Muda para português
+    // Change to Portuguese
     const ptButton = page.getByRole('button', { name: 'Português' });
     await ptButton.click();
     
-    // Aguarda a alteração do texto (pode ser necessário ajustar este tempo)
+    // Wait for the text to change (may need to adjust this time)
     await page.waitForTimeout(500);
     
-    // Verifica se o texto foi atualizado
+    // Check if the text has been updated
     const titleAfterChange = await page.getByRole('heading', { level: 1 }).textContent();
     expect(titleAfterChange).not.toBe(initialTitle);
     
-    // Muda para espanhol
+    // Change to Spanish
     const esButton = page.getByRole('button', { name: 'Español' });
     await esButton.click();
     
-    // Aguarda a alteração do texto
+    // Wait for the text to change
     await page.waitForTimeout(500);
     
-    // Verifica se o texto foi atualizado novamente
+    // Check if the text has been updated again
     const titleAfterSecondChange = await page.getByRole('heading', { level: 1 }).textContent();
     expect(titleAfterSecondChange).not.toBe(initialTitle);
     expect(titleAfterSecondChange).not.toBe(titleAfterChange);
   });
 
-  test('deve exibir textos correspondentes ao idioma selecionado', async ({ page }) => {
-    // Textos esperados em cada idioma (baseados no arquivo i18n.ts)
+  test('should display texts corresponding to the selected language', async ({ page }) => {
+    // Expected texts in each language (based on i18n.ts file)
     const expectedTexts = {
       en: {
         title: 'Svelte Template with Theme',
@@ -62,7 +62,7 @@ test.describe('Testes de Internacionalização (i18n)', () => {
       }
     };
     
-    // Testa cada idioma
+    // Test each language
     const languages = [
       { code: 'en', button: page.getByRole('button', { name: 'English' }) },
       { code: 'pt', button: page.getByRole('button', { name: 'Português' }) },
@@ -70,40 +70,40 @@ test.describe('Testes de Internacionalização (i18n)', () => {
     ];
     
     for (const lang of languages) {
-      // Muda para o idioma
+      // Change to the language
       await lang.button.click();
       
-      // Aguarda a alteração do texto
+      // Wait for the text to change
       await page.waitForTimeout(500);
       
-      // Verifica o título
+      // Check the title
       const title = await page.getByRole('heading', { level: 1 }).textContent();
       expect(title).toContain(expectedTexts[lang.code].title);
       
-      // Verifica o subtítulo
+      // Check the subtitle
       const subtitle = page.getByText(expectedTexts[lang.code].subtitle, { exact: true });
       await expect(subtitle).toBeVisible();
     }
   });
 
-  test('deve persistir a preferência de idioma entre recarregamentos', async ({ page }) => {
-    // Muda para português
+  test('should persist language preference between reloads', async ({ page }) => {
+    // Change to Portuguese
     const ptButton = page.getByRole('button', { name: 'Português' });
     await ptButton.click();
     
-    // Aguarda a alteração do texto
+    // Wait for the text to change
     await page.waitForTimeout(500);
     
-    // Registra o texto do cabeçalho em português
+    // Record the heading text in Portuguese
     const titleInPortuguese = await page.getByRole('heading', { level: 1 }).textContent();
     
-    // Recarrega a página
+    // Reload the page
     await page.reload();
     
-    // Aguarda que a página carregue completamente após o reload
+    // Wait for the page to fully load after reload
     await page.waitForLoadState('networkidle');
     
-    // Verifica se o texto ainda está em português após o recarregamento
+    // Check if the text is still in Portuguese after reload
     const titleAfterReload = await page.getByRole('heading', { level: 1 }).textContent();
     expect(titleAfterReload).toBe(titleInPortuguese);
   });

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { locale } from '../lib/i18n';
 
-// Mock locale do i18n
+// Mock i18n locale
 vi.mock('../lib/i18n', () => ({
   locale: {
     set: vi.fn(),
@@ -12,7 +12,7 @@ vi.mock('../lib/i18n', () => ({
   }
 }));
 
-// Mock para localStorage
+// Mock for localStorage
 const localStorageMock = {
   getItem: vi.fn(),
   setItem: vi.fn(),
@@ -23,14 +23,14 @@ const localStorageMock = {
   [Symbol.iterator]: function*() { yield* []; }
 };
 
-// Extrai a funcionalidade principal para teste
+// Extract main functionality for testing
 function createLanguageSelector() {
-  // Definido como string para evitar erro de tipo
+  // Defined as string to avoid type error
   let currentLocale: string = 'en';
   
-  // Simula o comportamento de subscription
+  // Simulates subscription behavior
   locale.subscribe((value) => {
-    // Garantimos que value é sempre string
+    // Ensure value is always string
     if (value) {
       currentLocale = value;
     }
@@ -51,11 +51,11 @@ describe('LanguageSelector', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     
-    // Configura o mock do localStorage
+    // Configure localStorage mock
     global.localStorage = localStorageMock;
   });
   
-  it('deve configurar o idioma quando setLanguage for chamado', () => {
+  it('should set the language when setLanguage is called', () => {
     const { setLanguage } = createLanguageSelector();
     
     setLanguage('pt');
@@ -64,10 +64,10 @@ describe('LanguageSelector', () => {
     expect(localStorageMock.setItem).toHaveBeenCalledWith('preferredLanguage', 'pt');
   });
   
-  it('deve configurar diferentes idiomas corretamente', () => {
+  it('should configure different languages correctly', () => {
     const { setLanguage } = createLanguageSelector();
     
-    // Testa múltiplos idiomas
+    // Test multiple languages
     const languages = ['en', 'es', 'pt'];
     
     languages.forEach(lang => {

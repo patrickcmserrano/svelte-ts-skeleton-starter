@@ -1,12 +1,12 @@
-// Sistema de internacionalização (i18n) simplificado
+// Simplified internationalization (i18n) system
 import { addMessages, init, locale, _ } from 'svelte-i18n';
 import { writable } from 'svelte/store';
 
-// Definições de idiomas
+// Language definitions
 export const SUPPORTED_LANGUAGES = ['en', 'pt', 'es'] as const;
 export type SupportedLanguage = typeof SUPPORTED_LANGUAGES[number];
 
-// Traduções básicas (usado principalmente para testes)
+// Basic translations (used mainly for testing)
 export const translations = {
   en: {
     greeting: 'Hello',
@@ -52,12 +52,12 @@ export const translations = {
   }
 };
 
-// Adiciona as mensagens ao dicionário
+// Add messages to the dictionary
 addMessages('en', translations.en);
 addMessages('pt', translations.pt);
 addMessages('es', translations.es);
 
-// Inicializa i18n com as configurações apropriadas
+// Initialize i18n with appropriate settings
 export function setupI18n() {
   const initialLocale = getInitialLocale();
   
@@ -69,20 +69,20 @@ export function setupI18n() {
 
 type TranslationKey = keyof typeof translations['en'];
 
-// Função para obter o locale inicial com base no navegador ou localStorage
+// Function to get the initial locale based on browser or localStorage
 function getInitialLocale() {
   if (typeof window === 'undefined') {
     return 'en';
   }
   
-  // Verifica se há um idioma preferido armazenado no localStorage
+  // Check if there's a preferred language stored in localStorage
   const savedLocale = localStorage.getItem('preferredLanguage');
   
   if (savedLocale && SUPPORTED_LANGUAGES.includes(savedLocale as SupportedLanguage)) {
     return savedLocale;
   }
   
-  // Usa o idioma do navegador se disponível
+  // Use browser language if available
   const browserLocale = navigator.language.split('-')[0];
   return SUPPORTED_LANGUAGES.includes(browserLocale as SupportedLanguage) ? browserLocale : 'en';
 }
@@ -101,7 +101,7 @@ export function createI18nStore() {
       return lang;
     },
     initialize() {
-      // Obtém a preferência salva, se houver
+      // Get saved preference, if any
       const savedLang = typeof localStorage !== 'undefined' 
         ? localStorage.getItem('preferredLanguage') as SupportedLanguage 
         : null;
@@ -111,7 +111,7 @@ export function createI18nStore() {
         return;
       }
       
-      // Tenta usar o idioma do navegador
+      // Try to use browser language
       if (typeof navigator !== 'undefined') {
         const browserLang = navigator.language.split('-')[0] as SupportedLanguage;
         if (SUPPORTED_LANGUAGES.includes(browserLang)) {
@@ -120,13 +120,13 @@ export function createI18nStore() {
         }
       }
       
-      // Usa inglês como padrão
+      // Use English as default
       this.setLanguage('en');
     },
     t(key: TranslationKey, lang: SupportedLanguage = 'en') {
       return translations[lang]?.[key] || key;
     },
-    translations // Exporta traduções para testes
+    translations // Export translations for tests
   };
 
   return store;
@@ -134,7 +134,7 @@ export function createI18nStore() {
 
 export const i18n = createI18nStore();
 
-// Configura ao carregar
+// Configure on load
 setupI18n();
 
 export { _, locale };

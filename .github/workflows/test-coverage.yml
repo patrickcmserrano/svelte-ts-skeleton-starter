@@ -1,4 +1,4 @@
-name: Build e Teste (CI)
+name: Build and Test (CI)
 
 on:
   push:
