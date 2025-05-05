@@ -1,19 +1,50 @@
-# Breathing App - Svelte + TypeScript + Vite
+# svelte-ts-skeleton-starter
 
-Este é um projeto Svelte moderno que utiliza TypeScript e Vite como bundler. Aqui está um guia detalhado de como este projeto foi criado e configurado.
+Um template moderno para projetos Svelte utilizando TypeScript e Vite como bundler. Este repositório serve como ponto de partida para novos projetos Svelte com uma configuração otimizada e pronta para uso.
+
+## Visão Geral
+
+Este template inclui:
+- Svelte 5 com suporte a TypeScript
+- Vite para desenvolvimento rápido e build otimizado
+- Integração com Skeleton UI
+- Configuração de tema claro/escuro
+- Estrutura de projeto organizada
+
+## Criação de Projetos a partir deste Template
+
+1. **Usando GitHub**
+   ```bash
+   # Clone este template
+   gh repo create meu-projeto --template svelte-ts-skeleton-starter
+   # ou use a interface do GitHub para criar um novo repositório a partir deste template
+   ```
+
+2. **Manualmente**
+   ```bash
+   # Clone o repositório
+   git clone https://github.com/seu-usuario/svelte-ts-skeleton-starter.git meu-projeto
+   
+   # Remova o histórico Git
+   cd meu-projeto
+   rm -rf .git
+   
+   # Inicialize um novo repositório Git
+   git init
+   ```
 
 ## Criação do Projeto
 
 1. **Inicialização do Projeto**
    ```bash
-   npm create vite@latest breathing-app-svelte -- --template svelte-ts
-   cd breathing-app-svelte
+   npm create vite@latest svelte-ts-skeleton-starter -- --template svelte-ts
+   cd svelte-ts-skeleton-starter
    npm install
    ```
 
 2. **Estrutura do Projeto**
    ```
-   📦 breathing-app-svelte
+   📦 svelte-ts-skeleton-starter
    ├── 📂 public/
    │   └── vite.svg
    ├── 📂 src/

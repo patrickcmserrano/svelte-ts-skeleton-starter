@@ -2,8 +2,15 @@
   import { Switch } from '@skeletonlabs/skeleton-svelte';
   import IconMoon from '@lucide/svelte/icons/moon';
   import IconSun from '@lucide/svelte/icons/sun';
+  import { onMount } from 'svelte';
 
   let isDarkMode = $state(false);
+
+  onMount(() => {
+    // Sincroniza o estado do toggle com o modo atual do tema
+    const storedMode = localStorage.getItem('mode') || 'light';
+    isDarkMode = storedMode === 'dark';
+  });
 
   function handleThemeChange(checked: boolean) {
     isDarkMode = checked;

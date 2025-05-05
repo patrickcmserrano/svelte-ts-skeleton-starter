@@ -8,6 +8,5 @@
   <div class="theme-toggle">
     <ThemeToggle />
   </div>
-  <h1 class="h1">4-7-8 Breathing App</h1>
-  <button type="button" class="btn variant-filled-primary">Start Breathing</button>
+  <h1 class="h1">svelte-ts-skeleton-starter</h1>
 </main>
