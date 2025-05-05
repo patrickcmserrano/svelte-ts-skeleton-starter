@@ -8,5 +8,5 @@ export default defineConfig({
     tailwindcss(),
     svelte(),
   ],
-  base: './', // Isso garante que os caminhos sejam relativos, funcionando em qualquer servidor
+  base: '/svelte-ts-skeleton-starter/', // Caminho base específico para o GitHub Pages
 });
