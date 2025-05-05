@@ -149,7 +149,65 @@ O projeto usa TypeScript para:
 - Melhor suporte da IDE
 - Código mais seguro e manutenível
 
+## Testes
+
+Este projeto inclui uma configuração completa para testes unitários e end-to-end (E2E).
+
+### Testes Unitários
+
+Utilizamos o [Vitest](https://vitest.dev/) para testes unitários com as seguintes características:
+
+- Integração com o ecossistema Svelte
+- Suporte para componentes Svelte
+- Geração de relatórios de cobertura de código
+- Ambiente de teste baseado em JSDOM
+
+Comandos disponíveis:
+
+```bash
+# Executar testes em modo watch (desenvolvimento)
+npm test
+
+# Executar testes uma única vez
+npm run test:run
+
+# Executar testes com relatório de cobertura
+npm run test:coverage
+npm run coverage
+```
+
+### Testes End-to-End (E2E)
+
+Utilizamos o [Playwright](https://playwright.dev/) para testes E2E com as seguintes características:
+
+- Suporte para múltiplos navegadores (Chrome, Firefox, Safari)
+- Testes de acessibilidade
+- Relatórios detalhados de execução
+
+Comandos disponíveis:
+
+```bash
+# Executar todos os testes E2E
+npm run e2e
+
+# Executar testes E2E com interface visual
+npm run e2e:ui
+
+# Visualizar relatório de testes E2E
+npm run e2e:report
+```
+
+### Executar Todos os Testes
+
+Para executar todos os testes (unitários e E2E) de uma só vez:
+
+```bash
+npm run test:all
+```
+
 ## Build e Deploy
+
+### Build Local
 
 Para criar uma build de produção:
 ```bash
@@ -157,6 +215,38 @@ npm run build
 ```
 
 Isso gerará uma versão otimizada do projeto na pasta `dist/`.
+
+### Deploy Automático
+
+Este projeto está configurado para deploy automático no GitHub Pages através de GitHub Actions.
+
+#### Workflow de Deploy
+
+O workflow de CI/CD está configurado para:
+
+1. Ser acionado em pushes para as branches `main` e `theme-implementation`
+2. Executar build da aplicação
+3. Publicar automaticamente no GitHub Pages
+
+Para fazer deploy manual:
+
+```bash
+# Build e deploy para GitHub Pages
+npm run deploy
+```
+
+#### Workflow de Testes e Cobertura
+
+Um workflow adicional executa testes e gera relatórios de cobertura:
+
+1. Executa testes unitários com cobertura
+2. Executa testes E2E
+3. Publica relatórios de cobertura no GitHub Pages
+4. Opcionalmente, envia resultados para Codecov (para repositórios públicos)
+
+#### Verificação de Pull Requests
+
+Os workflows também são executados em pull requests para as branches principais, garantindo que apenas código que passa em todos os testes seja integrado.
 
 ## Contribuindo
 

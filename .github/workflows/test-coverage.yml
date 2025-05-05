@@ -2,9 +2,9 @@ name: Test and Coverage
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, theme-implementation ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master, theme-implementation ]
 
 # Adicionar permissões ao GITHUB_TOKEN
 permissions:
@@ -65,7 +65,7 @@ jobs:
       
       # Alternativa: Publicar diretamente no GitHub Pages
       - name: Deploy Coverage Report to GitHub Pages
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/theme-implementation'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: coverage/

@@ -27,16 +27,18 @@
   </script>
 </svelte:head>
 
-<Switch
-  name="theme"
-  checked={isDarkMode}
-  onCheckedChange={(e) => handleThemeChange(e.checked)}
-  controlActive="bg-surface-200"
->
-  {#snippet inactiveChild()}
-    <IconMoon size="14" />
-  {/snippet}
-  {#snippet activeChild()}
-    <IconSun size="14" />
-  {/snippet}
-</Switch>
+<div aria-label="Theme toggle">
+  <Switch
+    name="theme"
+    checked={isDarkMode}
+    onCheckedChange={(e) => handleThemeChange(e.checked)}
+    controlActive="bg-surface-200"
+  >
+    {#snippet inactiveChild()}
+      <IconMoon size="14" />
+    {/snippet}
+    {#snippet activeChild()}
+      <IconSun size="14" />
+    {/snippet}
+  </Switch>
+</div>
