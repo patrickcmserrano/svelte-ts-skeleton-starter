@@ -283,14 +283,14 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { test, expect } from '@playwright/test';<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >test.describe('Testes de Internacionalização (i18n)', () =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >test.describe('Internationalization (i18n) Tests', () =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >  test.beforeEach(async ({ page }) =&gt; {</span>
-    // Navega para a página inicial antes de cada teste
+    // Navigate to the home page before each test
 <span class="cstat-no" title="statement not covered" >    await page.goto('/');</span>
 <span class="cstat-no" title="statement not covered" >  });</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  test('deve exibir o seletor de idiomas', async ({ page }) =&gt; {</span>
-    // Verifica se os botões de idioma estão presentes
+<span class="cstat-no" title="statement not covered" >  test('should display the language selector', async ({ page }) =&gt; {</span>
+    // Check if language buttons are present
 <span class="cstat-no" title="statement not covered" >    const enButton = page.getByRole('button', { name: 'English' });</span>
 <span class="cstat-no" title="statement not covered" >    const ptButton = page.getByRole('button', { name: 'Português' });</span>
 <span class="cstat-no" title="statement not covered" >    const esButton = page.getByRole('button', { name: 'Español' });</span>
@@ -300,36 +300,36 @@
 <span class="cstat-no" title="statement not covered" >    await expect(esButton).toBeVisible();</span>
 <span class="cstat-no" title="statement not covered" >  });</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  test('deve permitir trocar de idioma', async ({ page }) =&gt; {</span>
-    // Registra o texto do cabeçalho principal para comparação posterior
+<span class="cstat-no" title="statement not covered" >  test('should allow changing the language', async ({ page }) =&gt; {</span>
+    // Record the main heading text for later comparison
 <span class="cstat-no" title="statement not covered" >    const initialTitle = await page.getByRole('heading', { level: 1 }).textContent();</span>
     
-    // Muda para português
+    // Change to Portuguese
 <span class="cstat-no" title="statement not covered" >    const ptButton = page.getByRole('button', { name: 'Português' });</span>
 <span class="cstat-no" title="statement not covered" >    await ptButton.click();</span>
     
-    // Aguarda a alteração do texto (pode ser necessário ajustar este tempo)
+    // Wait for the text to change (may need to adjust this time)
 <span class="cstat-no" title="statement not covered" >    await page.waitForTimeout(500);</span>
     
-    // Verifica se o texto foi atualizado
+    // Check if the text has been updated
 <span class="cstat-no" title="statement not covered" >    const titleAfterChange = await page.getByRole('heading', { level: 1 }).textContent();</span>
 <span class="cstat-no" title="statement not covered" >    expect(titleAfterChange).not.toBe(initialTitle);</span>
     
-    // Muda para espanhol
+    // Change to Spanish
 <span class="cstat-no" title="statement not covered" >    const esButton = page.getByRole('button', { name: 'Español' });</span>
 <span class="cstat-no" title="statement not covered" >    await esButton.click();</span>
     
-    // Aguarda a alteração do texto
+    // Wait for the text to change
 <span class="cstat-no" title="statement not covered" >    await page.waitForTimeout(500);</span>
     
-    // Verifica se o texto foi atualizado novamente
+    // Check if the text has been updated again
 <span class="cstat-no" title="statement not covered" >    const titleAfterSecondChange = await page.getByRole('heading', { level: 1 }).textContent();</span>
 <span class="cstat-no" title="statement not covered" >    expect(titleAfterSecondChange).not.toBe(initialTitle);</span>
 <span class="cstat-no" title="statement not covered" >    expect(titleAfterSecondChange).not.toBe(titleAfterChange);</span>
 <span class="cstat-no" title="statement not covered" >  });</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  test('deve exibir textos correspondentes ao idioma selecionado', async ({ page }) =&gt; {</span>
-    // Textos esperados em cada idioma (baseados no arquivo i18n.ts)
+<span class="cstat-no" title="statement not covered" >  test('should display texts corresponding to the selected language', async ({ page }) =&gt; {</span>
+    // Expected texts in each language (based on i18n.ts file)
 <span class="cstat-no" title="statement not covered" >    const expectedTexts = {</span>
 <span class="cstat-no" title="statement not covered" >      en: {</span>
 <span class="cstat-no" title="statement not covered" >        title: 'Svelte Template with Theme',</span>
@@ -345,7 +345,7 @@
 <span class="cstat-no" title="statement not covered" >      }</span>
 <span class="cstat-no" title="statement not covered" >    };</span>
     
-    // Testa cada idioma
+    // Test each language
 <span class="cstat-no" title="statement not covered" >    const languages = [</span>
 <span class="cstat-no" title="statement not covered" >      { code: 'en', button: page.getByRole('button', { name: 'English' }) },</span>
 <span class="cstat-no" title="statement not covered" >      { code: 'pt', button: page.getByRole('button', { name: 'Português' }) },</span>
@@ -353,40 +353,40 @@
 <span class="cstat-no" title="statement not covered" >    ];</span>
     
 <span class="cstat-no" title="statement not covered" >    for (const lang of languages) {</span>
-      // Muda para o idioma
+      // Change to the language
 <span class="cstat-no" title="statement not covered" >      await lang.button.click();</span>
       
-      // Aguarda a alteração do texto
+      // Wait for the text to change
 <span class="cstat-no" title="statement not covered" >      await page.waitForTimeout(500);</span>
       
-      // Verifica o título
+      // Check the title
 <span class="cstat-no" title="statement not covered" >      const title = await page.getByRole('heading', { level: 1 }).textContent();</span>
 <span class="cstat-no" title="statement not covered" >      expect(title).toContain(expectedTexts[lang.code].title);</span>
       
-      // Verifica o subtítulo
+      // Check the subtitle
 <span class="cstat-no" title="statement not covered" >      const subtitle = page.getByText(expectedTexts[lang.code].subtitle, { exact: true });</span>
 <span class="cstat-no" title="statement not covered" >      await expect(subtitle).toBeVisible();</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" >  });</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  test('deve persistir a preferência de idioma entre recarregamentos', async ({ page }) =&gt; {</span>
-    // Muda para português
+<span class="cstat-no" title="statement not covered" >  test('should persist language preference between reloads', async ({ page }) =&gt; {</span>
+    // Change to Portuguese
 <span class="cstat-no" title="statement not covered" >    const ptButton = page.getByRole('button', { name: 'Português' });</span>
 <span class="cstat-no" title="statement not covered" >    await ptButton.click();</span>
     
-    // Aguarda a alteração do texto
+    // Wait for the text to change
 <span class="cstat-no" title="statement not covered" >    await page.waitForTimeout(500);</span>
     
-    // Registra o texto do cabeçalho em português
+    // Record the heading text in Portuguese
 <span class="cstat-no" title="statement not covered" >    const titleInPortuguese = await page.getByRole('heading', { level: 1 }).textContent();</span>
     
-    // Recarrega a página
+    // Reload the page
 <span class="cstat-no" title="statement not covered" >    await page.reload();</span>
     
-    // Aguarda que a página carregue completamente após o reload
+    // Wait for the page to fully load after reload
 <span class="cstat-no" title="statement not covered" >    await page.waitForLoadState('networkidle');</span>
     
-    // Verifica se o texto ainda está em português após o recarregamento
+    // Check if the text is still in Portuguese after reload
 <span class="cstat-no" title="statement not covered" >    const titleAfterReload = await page.getByRole('heading', { level: 1 }).textContent();</span>
 <span class="cstat-no" title="statement not covered" >    expect(titleAfterReload).toBe(titleInPortuguese);</span>
 <span class="cstat-no" title="statement not covered" >  });</span>
@@ -397,7 +397,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-05T04:55:53.565Z
+                at 2025-05-05T05:30:43.127Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

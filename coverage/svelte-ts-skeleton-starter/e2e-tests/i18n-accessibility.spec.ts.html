@@ -266,102 +266,102 @@
 <span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { test, expect } from '@playwright/test';<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
 <span class="cstat-no" title="statement not covered" >import { AccessibilityHelper } from './helpers/accessibility';</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >test.describe('Testes de Acessibilidade do Seletor de Idiomas', () =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >test.describe('Language Selector Accessibility Tests', () =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >  let a11y: AccessibilityHelper;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  test.beforeEach(async ({ page }) =&gt; {</span>
-    // Navega para a página inicial antes de cada teste
+    // Navigate to the home page before each test
 <span class="cstat-no" title="statement not covered" >    await page.goto('/');</span>
 <span class="cstat-no" title="statement not covered" >    a11y = new AccessibilityHelper(page);</span>
 <span class="cstat-no" title="statement not covered" >  });</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  test('seletor de idiomas deve ser acessível por teclado', async ({ page }) =&gt; {</span>
-    // Verifica se os botões de idioma estão presentes
+<span class="cstat-no" title="statement not covered" >  test('language selector should be accessible by keyboard', async ({ page }) =&gt; {</span>
+    // Check if language buttons are present
 <span class="cstat-no" title="statement not covered" >    const enButton = page.getByRole('button', { name: 'English' });</span>
     
-    // Verifica se o botão pode receber foco
+    // Check if the button can receive focus
 <span class="cstat-no" title="statement not covered" >    await enButton.focus();</span>
     
-    // Confirma que o elemento recebeu foco
+    // Confirm that the element received focus
 <span class="cstat-no" title="statement not covered" >    const isFocused = await page.evaluate(() =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      return document.activeElement?.tagName.toLowerCase() === 'button';</span>
 <span class="cstat-no" title="statement not covered" >    });</span>
     
-<span class="cstat-no" title="statement not covered" >    expect(isFocused, 'O botão de idioma deve receber foco').toBeTruthy();</span>
+<span class="cstat-no" title="statement not covered" >    expect(isFocused, 'The language button should receive focus').toBeTruthy();</span>
     
-    // Verifica navegação por teclado entre os botões
+    // Check keyboard navigation between buttons
 <span class="cstat-no" title="statement not covered" >    await page.keyboard.press('Tab');</span>
     
-    // Confirma que o foco moveu para o próximo botão
+    // Confirm that focus moved to the next button
 <span class="cstat-no" title="statement not covered" >    const secondButtonFocused = await page.evaluate(() =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      return document.activeElement?.tagName.toLowerCase() === 'button' &amp;&amp; </span>
 <span class="cstat-no" title="statement not covered" >             document.activeElement?.textContent?.trim() === 'PT';</span>
 <span class="cstat-no" title="statement not covered" >    });</span>
     
-<span class="cstat-no" title="statement not covered" >    expect(secondButtonFocused, 'Deve ser possível navegar entre botões com Tab').toBeTruthy();</span>
+<span class="cstat-no" title="statement not covered" >    expect(secondButtonFocused, 'It should be possible to navigate between buttons with Tab').toBeTruthy();</span>
 <span class="cstat-no" title="statement not covered" >  });</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  test('botões de idioma devem ter rótulos adequados', async ({ page }) =&gt; {</span>
-    // Verifica se cada botão tem um aria-label
+<span class="cstat-no" title="statement not covered" >  test('language buttons should have appropriate labels', async ({ page }) =&gt; {</span>
+    // Check if each button has an aria-label
 <span class="cstat-no" title="statement not covered" >    const enButton = page.getByRole('button', { name: 'English' });</span>
 <span class="cstat-no" title="statement not covered" >    const ptButton = page.getByRole('button', { name: 'Português' });</span>
 <span class="cstat-no" title="statement not covered" >    const esButton = page.getByRole('button', { name: 'Español' });</span>
     
-    // Verifica se os botões têm aria-label
+    // Check if buttons have aria-label
 <span class="cstat-no" title="statement not covered" >    const enHasAriaLabel = await enButton.evaluate(el =&gt; !!el.getAttribute('aria-label'));</span>
 <span class="cstat-no" title="statement not covered" >    const ptHasAriaLabel = await ptButton.evaluate(el =&gt; !!el.getAttribute('aria-label'));</span>
 <span class="cstat-no" title="statement not covered" >    const esHasAriaLabel = await esButton.evaluate(el =&gt; !!el.getAttribute('aria-label'));</span>
     
-<span class="cstat-no" title="statement not covered" >    expect(enHasAriaLabel, 'O botão EN deve ter aria-label').toBeTruthy();</span>
-<span class="cstat-no" title="statement not covered" >    expect(ptHasAriaLabel, 'O botão PT deve ter aria-label').toBeTruthy();</span>
-<span class="cstat-no" title="statement not covered" >    expect(esHasAriaLabel, 'O botão ES deve ter aria-label').toBeTruthy();</span>
+<span class="cstat-no" title="statement not covered" >    expect(enHasAriaLabel, 'The EN button should have aria-label').toBeTruthy();</span>
+<span class="cstat-no" title="statement not covered" >    expect(ptHasAriaLabel, 'The PT button should have aria-label').toBeTruthy();</span>
+<span class="cstat-no" title="statement not covered" >    expect(esHasAriaLabel, 'The ES button should have aria-label').toBeTruthy();</span>
 <span class="cstat-no" title="statement not covered" >  });</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  test('alternar idioma não deve causar problemas de acessibilidade', async ({ page }) =&gt; {</span>
-    // Verifica a estrutura de cabeçalhos inicial
+<span class="cstat-no" title="statement not covered" >  test('changing language should not cause accessibility issues', async ({ page }) =&gt; {</span>
+    // Check initial heading structure
 <span class="cstat-no" title="statement not covered" >    await a11y.expectValidHeadingStructure();</span>
     
-    // Clica no botão PT
+    // Click on the PT button
 <span class="cstat-no" title="statement not covered" >    const ptButton = page.getByRole('button', { name: 'Português' });</span>
 <span class="cstat-no" title="statement not covered" >    await ptButton.click();</span>
     
-    // Aguarda a alteração do texto
+    // Wait for text change
 <span class="cstat-no" title="statement not covered" >    await page.waitForTimeout(500);</span>
     
-    // Verifica a estrutura de cabeçalhos após a mudança
+    // Check heading structure after change
 <span class="cstat-no" title="statement not covered" >    await a11y.expectValidHeadingStructure();</span>
     
-    // Verifica contraste de cores após a mudança
+    // Check color contrast after change
 <span class="cstat-no" title="statement not covered" >    await a11y.expectSufficientColorContrast(page.getByRole('heading', { level: 1 }));</span>
     
-    // Clica no botão ES
+    // Click on the ES button
 <span class="cstat-no" title="statement not covered" >    const esButton = page.getByRole('button', { name: 'Español' });</span>
 <span class="cstat-no" title="statement not covered" >    await esButton.click();</span>
     
-    // Aguarda a alteração do texto
+    // Wait for text change
 <span class="cstat-no" title="statement not covered" >    await page.waitForTimeout(500);</span>
     
-    // Repete verificações
+    // Repeat checks
 <span class="cstat-no" title="statement not covered" >    await a11y.expectValidHeadingStructure();</span>
 <span class="cstat-no" title="statement not covered" >    await a11y.expectSufficientColorContrast(page.getByRole('heading', { level: 1 }));</span>
 <span class="cstat-no" title="statement not covered" >  });</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  test('botão ativo deve ser visualmente distinto', async ({ page }) =&gt; {</span>
-    // Verifica se o botão ativo tem a classe 'active'
+<span class="cstat-no" title="statement not covered" >  test('active button should be visually distinct', async ({ page }) =&gt; {</span>
+    // Check if the active button has the 'active' class
 <span class="cstat-no" title="statement not covered" >    const ptButton = page.getByRole('button', { name: 'Português' });</span>
 <span class="cstat-no" title="statement not covered" >    await ptButton.click();</span>
     
-    // Aguarda a alteração
+    // Wait for the change
 <span class="cstat-no" title="statement not covered" >    await page.waitForTimeout(500);</span>
     
-    // Verifica se o botão PT tem a classe 'active'
+    // Check if the PT button has the 'active' class
 <span class="cstat-no" title="statement not covered" >    const ptHasActiveClass = await ptButton.evaluate(el =&gt; el.classList.contains('active'));</span>
-<span class="cstat-no" title="statement not covered" >    expect(ptHasActiveClass, 'O botão PT deve ter a classe active após ser clicado').toBeTruthy();</span>
+<span class="cstat-no" title="statement not covered" >    expect(ptHasActiveClass, 'The PT button should have the active class after being clicked').toBeTruthy();</span>
     
-    // Verifica se o botão EN não tem a classe 'active'
+    // Check if the EN button does not have the 'active' class
 <span class="cstat-no" title="statement not covered" >    const enButton = page.getByRole('button', { name: 'English' });</span>
 <span class="cstat-no" title="statement not covered" >    const enHasActiveClass = await enButton.evaluate(el =&gt; el.classList.contains('active'));</span>
-<span class="cstat-no" title="statement not covered" >    expect(enHasActiveClass, 'O botão EN não deve ter a classe active após clicar em PT').toBeFalsy();</span>
+<span class="cstat-no" title="statement not covered" >    expect(enHasActiveClass, 'The EN button should not have the active class after clicking PT').toBeFalsy();</span>
 <span class="cstat-no" title="statement not covered" >  });</span>
 <span class="cstat-no" title="statement not covered" >});</span></pre></td></tr></table></pre>
 
@@ -370,7 +370,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-05T04:55:53.565Z
+                at 2025-05-05T05:30:43.127Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
