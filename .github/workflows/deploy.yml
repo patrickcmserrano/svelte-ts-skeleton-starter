@@ -1,59 +1,69 @@
-name: Deploy Svelte App to GitHub Pages
+name: Deploy para GitHub Pages (CD)
 
 on:
-  push:
-    branches:
-      - main
-      - theme-implementation
-  workflow_dispatch: # Allows manual triggering from the Actions tab
+  # Apenas manualmente ou workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      deploy_coverage:
+        description: 'Publicar relatório de cobertura'
+        type: boolean
+        default: true
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false # Prevents canceling in-progress deployments
+  contents: write
 
 jobs:
-  build:
+  deploy-app:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm' # Cache npm dependencies for faster builds
-
+          cache: 'npm'
+      
       - name: Install and Build
         run: |
           npm ci
           npm run build
-
+      
       - name: Create .nojekyll
-        run: touch dist/.nojekyll # Bypasses Jekyll processing
-
-      - name: Verify Build Output
-        run: |
-          echo "Contents of dist directory:"
-          ls -la dist/
-
-      - name: Upload Artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist # Correct path for Vite output
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
+        run: touch dist/.nojekyll
+      
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          branch: gh-pages
+          clean-exclude: coverage/**
+          commit-message: "Deploy da aplicação [skip ci]"
+  
+  deploy-coverage:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.deploy_coverage == 'true' }}
+    needs: deploy-app
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install Dependencies
+        run: npm ci
+      
+      - name: Run Unit Tests with Coverage
+        run: npm run test:coverage
+      
+      - name: Deploy Coverage Report
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: coverage/
+          branch: gh-pages
+          target-folder: coverage
+          clean: false
+          commit-message: "Deploy do relatório de cobertura [skip ci]"

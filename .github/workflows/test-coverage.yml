@@ -1,21 +1,18 @@
-name: Test and Coverage
+name: Build e Teste (CI)
 
 on:
   push:
-    branches: [ main, master, theme-implementation ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master, theme-implementation ]
+    branches: [ main ]
+  workflow_dispatch:
 
-# Adicionar permissões ao GITHUB_TOKEN
 permissions:
-  contents: write
-  pages: write
-  id-token: write
-
+  contents: read
+  
 jobs:
-  test:
+  build-and-test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       
@@ -28,6 +25,16 @@ jobs:
       - name: Install Dependencies
         run: npm ci
       
+      - name: Build
+        run: npm run build
+        
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: dist/
+          retention-days: 1
+      
       - name: Run Unit Tests with Coverage
         run: npm run test:coverage
       
@@ -38,23 +45,18 @@ jobs:
           path: coverage/
           retention-days: 7
       
-      # Opcional: Upload para Codecov sem exigir token (funciona para repositórios públicos)
       - name: Upload to Codecov
         uses: codecov/codecov-action@v3
         with:
           directory: ./coverage/
           fail_ci_if_error: false
-          # Nota: O token está removido; Codecov funcionará sem token para repos públicos
       
-      # Install Playwright browsers
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       
-      # Run Playwright tests
       - name: Run E2E Tests
         run: npm run e2e
       
-      # Upload Playwright report as artifact
       - name: Upload Playwright Report
         if: always()
         uses: actions/upload-artifact@v4
@@ -62,13 +64,3 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 7
-      
-      # Alternativa: Publicar diretamente no GitHub Pages
-      - name: Deploy Coverage Report to GitHub Pages
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/theme-implementation'
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: coverage/
-          target-folder: coverage
-          clean: true
-          token: ${{ secrets.GITHUB_TOKEN }}

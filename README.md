@@ -12,6 +12,7 @@ Este template inclui:
 - Estrutura de projeto organizada
 - Suporte à internacionalização (i18n)
 - Testes unitários e E2E abrangentes
+- CI/CD com GitHub Actions para deploy no GitHub Pages
 
 ## Criação de Projetos a partir deste Template
 
@@ -262,37 +263,60 @@ npm run build
 
 Isso gerará uma versão otimizada do projeto na pasta `dist/`.
 
-### Deploy Automático
+### Deploy Automático com GitHub Pages
 
-Este projeto está configurado para deploy automático no GitHub Pages através de GitHub Actions.
+Este projeto está configurado para deploy no GitHub Pages usando GitHub Actions com uma abordagem CI/CD moderna.
 
-#### Workflow de Deploy
+#### Configuração do GitHub Pages
 
-O workflow de CI/CD está configurado para:
+Para configurar o GitHub Pages no seu repositório:
 
-1. Ser acionado em pushes para as branches `main` e `theme-implementation`
-2. Executar build da aplicação
-3. Publicar automaticamente no GitHub Pages
+1. No GitHub, vá para seu repositório e clique em **Settings**
+2. No menu lateral, clique em **Pages**
+3. Em **Source**, selecione **Deploy from a branch**
+4. Em **Branch**, selecione **gh-pages** e **/ (root)**
+5. Clique em **Save**
 
-Para fazer deploy manual:
+#### Workflows de CI/CD
 
-```bash
-# Build e deploy para GitHub Pages
-npm run deploy
-```
+O projeto utiliza dois workflows separados:
 
-#### Workflow de Testes e Cobertura
+1. **Build e Teste (CI)** `.github/workflows/test-coverage.yml`
+   - Acionado automaticamente em pushes para o branch `main`
+   - Acionado em pull requests para o branch `main`
+   - Compila a aplicação e executa testes
+   - Gera relatórios de cobertura de código
+   - Armazena artefatos de build para uso posterior
+   
+2. **Deploy para GitHub Pages (CD)** `.github/workflows/deploy.yml`
+   - Acionado **apenas manualmente** via Actions no GitHub
+   - Permite controle total sobre quando fazer deploy
+   - Opção para publicar também o relatório de cobertura
+   - Publica tudo no branch `gh-pages`
 
-Um workflow adicional executa testes e gera relatórios de cobertura:
+#### Como iniciar um deploy manualmente
 
-1. Executa testes unitários com cobertura
-2. Executa testes E2E
-3. Publica relatórios de cobertura no GitHub Pages
-4. Opcionalmente, envia resultados para Codecov (para repositórios públicos)
+1. No GitHub, vá para seu repositório e clique na aba **Actions**
+2. No menu lateral, selecione o workflow **Deploy para GitHub Pages (CD)**
+3. Clique no botão **Run workflow**
+4. Marque ou desmarque a opção "Publicar relatório de cobertura" conforme necessário
+5. Clique em **Run workflow** para iniciar o processo de deploy
 
-#### Verificação de Pull Requests
+#### Estrutura no branch gh-pages
 
-Os workflows também são executados em pull requests para as branches principais, garantindo que apenas código que passa em todos os testes seja integrado.
+Após o deploy, o branch `gh-pages` terá a seguinte estrutura:
+- `/` - Raiz com a aplicação principal
+- `/coverage/` - Relatórios de cobertura de testes (quando publicados)
+
+### Esquema de Branches
+
+O projeto utiliza o seguinte esquema de branches:
+- `main`: Branch principal de desenvolvimento
+- `gh-pages`: Branch onde o site compilado é publicado (não edite manualmente)
+
+#### Prevenção de loops de CI/CD
+
+Os commits de deploy incluem `[skip ci]` na mensagem para evitar que o deploy acione novos workflows, prevenindo loops infinitos.
 
 ## Contribuindo
 
