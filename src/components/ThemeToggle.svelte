@@ -18,6 +18,9 @@
     document.documentElement.setAttribute('data-mode', mode);
     localStorage.setItem('mode', mode);
   }
+
+  // Garante que o componente exporte algo
+  export {};
 </script>
 
 <svelte:head>
