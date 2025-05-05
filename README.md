@@ -10,6 +10,8 @@ Este template inclui:
 - Integração com Skeleton UI
 - Configuração de tema claro/escuro
 - Estrutura de projeto organizada
+- Suporte à internacionalização (i18n)
+- Testes unitários e E2E abrangentes
 
 ## Criação de Projetos a partir deste Template
 
@@ -71,6 +73,7 @@ Este template inclui:
 ### Dependências Principais
 - `svelte`: ^5.23.1
 - `@skeletonlabs/skeleton`: ^3.1.3
+- `svelte-i18n`: ^4.0.0 # Biblioteca de internacionalização
 
 ### Dependências de Desenvolvimento
 - `@sveltejs/vite-plugin-svelte`: ^5.0.3
@@ -129,7 +132,15 @@ O projeto utiliza TypeScript com as seguintes configurações principais:
 - `/public`: Arquivos estáticos que serão servidos diretamente
 - `/src`: Código fonte da aplicação
   - `/assets`: Recursos como imagens e ícones
-  - `/lib`: Componentes reutilizáveis
+  - `/components`: Componentes da interface de usuário
+    - `LanguageSelector.svelte`: Componente para troca de idiomas
+    - `ThemeToggle.svelte`: Componente para alternar entre temas claro/escuro
+  - `/lib`: Componentes reutilizáveis e funcionalidades compartilhadas
+    - `i18n.ts`: Sistema de internacionalização
+    - `/locales`: Arquivos de tradução para diferentes idiomas
+      - `en.ts`: Traduções para inglês
+      - `pt.ts`: Traduções para português
+      - `es.ts`: Traduções para espanhol
   - `/styles`: Arquivos de estilo globais
   - `App.svelte`: Componente raiz da aplicação
   - `main.ts`: Ponto de entrada da aplicação
@@ -161,6 +172,7 @@ Utilizamos o [Vitest](https://vitest.dev/) para testes unitários com as seguint
 - Suporte para componentes Svelte
 - Geração de relatórios de cobertura de código
 - Ambiente de teste baseado em JSDOM
+- Testes mock para módulos externos
 
 Comandos disponíveis:
 
@@ -176,6 +188,17 @@ npm run test:coverage
 npm run coverage
 ```
 
+#### Testes de Internacionalização (i18n)
+
+O sistema de internacionalização possui testes unitários abrangentes que verificam:
+
+- Inicialização correta do sistema de i18n
+- Detecção de idioma do navegador
+- Persistência de preferências do usuário
+- Carregamento e acesso às traduções
+- Consistência das chaves de tradução entre diferentes idiomas
+- Comportamento adequado quando chaves de tradução não existem
+
 ### Testes End-to-End (E2E)
 
 Utilizamos o [Playwright](https://playwright.dev/) para testes E2E com as seguintes características:
@@ -183,6 +206,7 @@ Utilizamos o [Playwright](https://playwright.dev/) para testes E2E com as seguin
 - Suporte para múltiplos navegadores (Chrome, Firefox, Safari)
 - Testes de acessibilidade
 - Relatórios detalhados de execução
+- Testes específicos para funcionalidades de internacionalização
 
 Comandos disponíveis:
 
@@ -196,6 +220,28 @@ npm run e2e:ui
 # Visualizar relatório de testes E2E
 npm run e2e:report
 ```
+
+#### Testes E2E de Internacionalização
+
+Os testes E2E para internacionalização garantem que:
+
+- Os seletores de idioma estão presentes e funcionais na interface
+- A mudança de idioma atualiza corretamente o conteúdo da página
+- As preferências de idioma são persistidas entre recarregamentos
+- Os elementos de texto aparecem corretamente no idioma selecionado
+- A acessibilidade é mantida ao alternar entre idiomas
+
+Estes testes usam a abordagem baseada em papel e nome dos elementos (`getByRole`, `getByText`), o que torna os testes mais robustos e menos suscetíveis a quebras devido a mudanças na estrutura HTML ou CSS.
+
+### Testes de Acessibilidade
+
+O projeto inclui testes específicos de acessibilidade para:
+
+- Estrutura adequada de cabeçalhos
+- Navegação por teclado
+- Atributos ARIA adequados
+- Contraste de cores
+- Acessibilidade do seletor de idiomas
 
 ### Executar Todos os Testes
 
