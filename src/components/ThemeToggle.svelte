@@ -24,6 +24,15 @@
     document.body.style.backgroundColor = 'var(--app-background)';
     document.body.style.color = 'var(--app-text)';
     
+    // Forçar atualização imediata de elementos específicos
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      if (card instanceof HTMLElement) {
+        card.style.backgroundColor = mode === 'dark' ? 'var(--card-bg)' : 'var(--card-bg)';
+        card.style.color = mode === 'dark' ? 'var(--card-text)' : 'var(--card-text)';
+      }
+    });
+    
     try {
       localStorage.setItem('mode', mode);
     } catch (e) {
