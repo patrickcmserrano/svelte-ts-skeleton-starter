@@ -256,67 +256,141 @@ npm run test:all
 
 ### Local Build
 
-To create a production build:
+To build the project for production:
+
 ```bash
 npm run build
 ```
 
-This will generate an optimized version of the project in the `dist/` folder.
+The built files will be available in the `dist/` directory.
 
 ### Automated Deployment with GitHub Pages
 
-This project is configured for deployment to GitHub Pages using GitHub Actions with a modern CI/CD approach.
+This template supports automatic deployment to GitHub Pages with comprehensive testing integration.
 
-#### GitHub Pages Configuration
+#### Configuration Setup
 
-To configure GitHub Pages in your repository:
+1. **Configure GitHub Pages** in your repository settings:
+   - Go to repository **Settings** → **Pages**
+   - Under **Source**, select **GitHub Actions**
+   - Save the configuration
 
-1. In GitHub, go to your repository and click on **Settings**
-2. In the sidebar menu, click on **Pages**
-3. Under **Source**, select **Deploy from a branch**
-4. Under **Branch**, select **gh-pages** and **/ (root)**
-5. Click on **Save**
+2. **Update `vite.config.ts`** with your repository name:
+   ```ts
+   export default defineConfig({
+     plugins: [svelte()],
+     base: '/your-repository-name/', // Replace with your repository name
+     // other configurations
+   });
+   ```
 
-#### CI/CD Workflows
+#### Automatic Deployment Workflow
 
-The project uses two separate workflows:
+The deployment workflow (`.github/workflows/deploy.yml`) automatically:
 
-1. **Build and Test (CI)** `.github/workflows/test-coverage.yml`
-   - Triggered automatically on pushes to the `main` branch
-   - Triggered on pull requests to the `main` branch
-   - Compiles the application and runs tests
-   - Generates code coverage reports
-   - Stores build artifacts for later use
-   
-2. **Deploy to GitHub Pages (CD)** `.github/workflows/deploy.yml`
-   - Triggered **only manually** via Actions in GitHub
-   - Provides complete control over when to deploy
-   - Option to also publish the coverage report
-   - Publishes everything to the `gh-pages` branch
+- ✅ **Triggers on every push** to `main` branch
+- ✅ **Runs comprehensive tests** before deployment
+- ✅ **Deploys only when tests pass**
+- ✅ **Includes unit and E2E testing**
+- ✅ **Provides complete deployment history**
+- ✅ **Supports manual triggering** via GitHub Actions interface
 
-#### How to Start a Manual Deployment
+#### Deployment Process
 
-1. In GitHub, go to your repository and click on the **Actions** tab
-2. In the sidebar menu, select the **Deploy to GitHub Pages (CD)** workflow
-3. Click on the **Run workflow** button
-4. Check or uncheck the "Publish coverage report" option as needed
-5. Click on **Run workflow** to start the deployment process
+The automated deployment includes:
 
-#### Structure in the gh-pages Branch
+1. **Environment Setup**: Node.js 20 with npm caching
+2. **Dependency Installation**: `npm ci` for reproducible builds
+3. **Unit Testing**: Validates component functionality
+4. **E2E Testing**: End-to-end testing with Playwright across multiple browsers
+5. **Build Generation**: Production-optimized build
+6. **GitHub Pages Deployment**: Automatic publishing to GitHub Pages
 
-After deployment, the `gh-pages` branch will have the following structure:
-- `/` - Root with the main application
-- `/coverage/` - Test coverage reports (when published)
+#### Manual Deployment Option
 
-### Branch Scheme
+You can also trigger deployment manually:
 
-The project uses the following branch scheme:
-- `main`: Main development branch
-- `gh-pages`: Branch where the compiled site is published (do not edit manually)
+1. Go to repository **Actions** tab
+2. Select **Deploy to GitHub Pages** workflow
+3. Click **Run workflow**
+4. Confirm the deployment
 
-#### Prevention of CI/CD Loops
+### Deployment Configuration
 
-Deploy commits include `[skip ci]` in the message to prevent the deployment from triggering new workflows, preventing infinite loops.
+#### Base URL Configuration
+
+For GitHub Pages deployment, ensure your `vite.config.ts` includes the correct base path:
+
+```ts
+export default defineConfig({
+  plugins: [svelte()],
+  base: process.env.NODE_ENV === 'production' ? '/your-repo-name/' : '/',
+  // other configurations
+});
+```
+
+#### Environment Variables
+
+For different deployment environments:
+
+```ts
+// vite.config.ts
+export default defineConfig({
+  plugins: [svelte()],
+  base: process.env.VITE_BASE_URL || '/',
+  define: {
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
+  },
+});
+```
+
+### Testing Before Deployment
+
+The deployment process includes comprehensive testing:
+
+1. **Unit Tests**: Component functionality and logic validation using Vitest
+2. **E2E Tests**: End-to-end user interaction testing with Playwright
+3. **Cross-Browser Testing**: Validation across Chromium, Firefox, and WebKit
+4. **Accessibility Tests**: Automated accessibility validation with axe-core
+5. **Build Validation**: Ensures the application builds successfully
+
+### Troubleshooting Deployment
+
+#### Common Issues
+
+1. **Base URL Problems**: Ensure the `base` configuration matches your repository name
+2. **Asset Loading**: Use relative paths for assets and images
+3. **Test Failures**: Check the Actions tab for detailed test failure logs
+4. **Permission Issues**: Ensure GitHub Actions has proper permissions
+
+#### Debugging Failed Deployments
+
+1. Check the **Actions** tab in your GitHub repository
+2. Review the workflow logs for specific error messages
+3. Ensure all tests pass locally before pushing:
+   ```bash
+   npm run test:run  # Run unit tests
+   npm run e2e      # Run E2E tests
+   npm run build    # Test build process
+   ```
+4. Verify the `base` URL configuration
+
+### Advanced Deployment Features
+
+#### Custom Domain
+
+To use a custom domain with GitHub Pages:
+
+1. Add a `CNAME` file to the `public/` directory with your domain
+2. Configure DNS settings with your domain provider
+3. Update the `base` configuration if needed
+
+#### Branch Strategy
+
+- `main`: Main development branch with automatic deployment
+- `gh-pages`: Automatically managed deployment branch (do not edit manually)
+
+The workflow uses GitHub's native Pages deployment action, eliminating the need for manual branch management.
 
 ## Contributing
 
