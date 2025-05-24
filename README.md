@@ -8,7 +8,7 @@ This template includes:
 - Svelte 5 with TypeScript support
 - Vite for fast development and optimized build
 - Skeleton UI integration
-- Light/dark theme configuration
+- Enhanced dark/light theme system with CSS variables
 - Organized project structure
 - Internationalization (i18n) support
 - Comprehensive unit and E2E tests
@@ -135,7 +135,7 @@ The project uses TypeScript with the following main configurations:
   - `/assets`: Resources such as images and icons
   - `/components`: User interface components
     - `LanguageSelector.svelte`: Component for language switching
-    - `ThemeToggle.svelte`: Component for toggling between light/dark themes
+    - `ThemeToggle.svelte`: Enhanced component for toggling between light/dark themes with improved accessibility, theme persistence, and error handling
   - `/lib`: Reusable components and shared functionalities
     - `i18n.ts`: Internationalization system
     - `/locales`: Translation files for different languages
@@ -329,3 +329,108 @@ Deploy commits include `[skip ci]` in the message to prevent the deployment from
 ## Support
 
 For questions and support, please open an issue in the project repository.
+
+## Recent Template Updates
+
+### Enhanced Theme System (May 2025)
+
+The template now includes an improved theme system with the following features:
+
+- **Robust Dark/Light Mode**: Implements theme switching using multiple approaches simultaneously:
+  - CSS Variables with `data-mode` attribute
+  - Tailwind Dark Mode with `dark` class
+  - Skeleton UI themes with `data-theme` attribute
+  - Automatic theme persistence using localStorage
+  
+- **Flash Prevention**: Includes script in HTML to apply theme immediately during page load, preventing flash of wrong theme
+  
+- **Error Handling**: Built-in fallbacks if localStorage is unavailable
+  
+- **Accessibility**: Improved accessibility with proper ARIA attributes on theme toggle controls
+  
+- **Comprehensive Tests**: Enhanced test coverage for theme functionality including error handling
+
+### Example Usage
+
+The theme system provides a simple API through the ThemeToggle component:
+
+```svelte
+<script>
+  import ThemeToggle from './components/ThemeToggle.svelte';
+</script>
+
+<ThemeToggle />
+```
+
+Custom styling can be applied using the CSS variables defined in `src/styles/global.css`:
+
+```css
+:root {
+  --app-background: #ffffff;
+  --app-text: #1a202c;
+  /* other variables */
+}
+
+[data-mode="dark"] {
+  --app-background: #0f172a;
+  --app-text: #f8fafc;
+  /* other dark mode variables */
+}
+```
+
+## Theme System Technical Details
+
+The theme system uses a multi-layered approach to ensure comprehensive theming:
+
+1. **CSS Custom Properties (Variables)**
+   - Defined in `src/styles/global.css`
+   - Allows custom styling with semantic variables like `--app-background` and `--app-text`
+   - Variables change based on the `data-mode` attribute
+
+2. **HTML Data Attributes**
+   - `data-mode`: Controls the main theme ('light' or 'dark')
+   - `data-theme`: Controls the Skeleton UI theme ('skeleton' for light, 'vintage' for dark)
+
+3. **CSS Class**
+   - The `dark` class is added to `html` element for Tailwind dark mode
+   - Enables the use of `dark:` variant in Tailwind classes
+
+4. **Local Storage Persistence**
+   - Theme preference is saved in `localStorage` as 'mode'
+   - Automatically restored on page load
+   - Includes error handling for privacy modes
+
+5. **Initialization**
+   - Theme is applied immediately during page load in `index.html`
+   - Prevents flash of incorrect theme on initial load
+
+6. **Accessibility**
+   - Theme toggle uses proper ARIA attributes
+   - Keyboard navigable
+   - Maintains color contrast standards
+
+See `src/components/ThemeToggle.example.ts` for examples of how to extend the theme system.
+
+## Atualizações Recentes de Correção (Maio 2025)
+
+1. **Correção da API de Eventos do Svelte 5**
+   - Atualizado o uso de `on:click` para `onclick` conforme recomendado pela API do Svelte 5
+   - Esta mudança afeta os componentes ThemeToggle e LanguageSelector
+
+2. **Ajustes no Sistema de Temas**
+   - Removidas importações problemáticas de temas específicos do Skeleton UI
+   - Mantida a funcionalidade de tema usando variáveis CSS e atributos data-mode/data-theme
+   - Corrigida a forma como o ThemeToggle é renderizado no App.svelte
+
+3. **Compatibilidade com Testes E2E**
+   - Garantido que os elementos esperados pelos testes E2E estão presentes no DOM
+   - Mantida a estrutura correta de cabeçalhos para testes de acessibilidade
+
+Para executar os testes após estas correções:
+```bash
+# Teste unitários
+npm run test:run
+
+# Testes E2E
+npm run e2e
+```

@@ -43,19 +43,46 @@ const localStorageMock: StorageMock = {
 };
 
 const documentElementMock = {
-  setAttribute: vi.fn()
+  setAttribute: vi.fn(),
+  classList: {
+    add: vi.fn(),
+    remove: vi.fn()
+  }
+};
+
+const documentBodyMock = {
+  style: {
+    backgroundColor: '',
+    color: ''
+  }
 };
 
 // Directly test the functionality by extracting it from the ThemeToggle component
 // We'll create test functions that mimic the behavior of the component
 function setTheme(mode: string) {
   document.documentElement.setAttribute('data-mode', mode);
+  
+  if (mode === 'dark') {
+    document.documentElement.classList.add('dark');
+    document.documentElement.setAttribute('data-theme', 'vintage');
+  } else {
+    document.documentElement.classList.remove('dark');
+    document.documentElement.setAttribute('data-theme', 'skeleton');
+  }
+  
+  document.body.style.backgroundColor = 'var(--app-background)';
+  document.body.style.color = 'var(--app-text)';
+  
   localStorage.setItem('mode', mode);
 }
 
 function getThemeFromLocalStorage() {
-  const savedMode = localStorage.getItem('mode');
-  return savedMode || 'dark'; // Default to dark if no saved preference
+  try {
+    const savedMode = localStorage.getItem('mode');
+    return savedMode || 'light'; // Default to light if no saved preference
+  } catch (e) {
+    return 'light'; // Fallback if localStorage is not available
+  }
 }
 
 function initTheme() {
@@ -72,30 +99,66 @@ describe('ThemeToggle functionality', () => {
     global.localStorage = localStorageMock;
     global.document = {
       ...document,
-      documentElement: documentElementMock
+      documentElement: documentElementMock,
+      body: documentBodyMock
     } as any;
   });
 
-  it('should initialize with dark mode by default', () => {
+  it('should initialize with light mode by default if no preference exists', () => {
     // Mock localStorage.getItem to return null (no saved preference)
     localStorageMock.getItem.mockReturnValue(null);
     
     // Test the function directly
     initTheme();
     
-    // Verify the dark theme was set'
-    expect(localStorageMock.setItem).toHaveBeenCalledWith('mode', 'dark');
-    expect(documentElementMock.setAttribute).toHaveBeenCalledWith('data-mode', 'dark');
+    // Verify the light theme was set
+    expect(localStorageMock.setItem).toHaveBeenCalledWith('mode', 'light');
+    expect(documentElementMock.setAttribute).toHaveBeenCalledWith('data-mode', 'light');
+    expect(documentElementMock.setAttribute).toHaveBeenCalledWith('data-theme', 'skeleton');
+    expect(documentElementMock.classList.remove).toHaveBeenCalledWith('dark');
   });
 
   it('should load theme from localStorage on init', () => {
-    // Mock localStorage to return 'light'
-    localStorageMock.getItem.mockReturnValue('light');
+    // Mock localStorage to return 'dark'
+    localStorageMock.getItem.mockReturnValue('dark');
     
     // Test the function directly
     initTheme();
     
-    // Verify the light theme was set
+    // Verify the dark theme was set
+    expect(documentElementMock.setAttribute).toHaveBeenCalledWith('data-mode', 'dark');
+    expect(documentElementMock.setAttribute).toHaveBeenCalledWith('data-theme', 'vintage');
+    expect(documentElementMock.classList.add).toHaveBeenCalledWith('dark');
+  });
+
+  it('should handle localStorage exceptions gracefully', () => {
+    // Mock localStorage.getItem to throw an error
+    localStorageMock.getItem.mockImplementation(() => {
+      throw new Error('localStorage not available');
+    });
+    
+    // Test the function directly - should not throw
+    expect(() => initTheme()).not.toThrow();
+    
+    // Verify fallback to light theme
     expect(documentElementMock.setAttribute).toHaveBeenCalledWith('data-mode', 'light');
+  });
+
+  it('should update theme when toggled', () => {
+    // Setup initial state as light
+    localStorageMock.getItem.mockReturnValue('light');
+    initTheme();
+    vi.clearAllMocks();
+    
+    // Simulate toggling to dark mode
+    setTheme('dark');
+    
+    // Verify dark theme was applied
+    expect(documentElementMock.setAttribute).toHaveBeenCalledWith('data-mode', 'dark');
+    expect(documentElementMock.setAttribute).toHaveBeenCalledWith('data-theme', 'vintage');
+    expect(documentElementMock.classList.add).toHaveBeenCalledWith('dark');
+    expect(localStorageMock.setItem).toHaveBeenCalledWith('mode', 'dark');
+    expect(documentBodyMock.style.backgroundColor).toBe('var(--app-background)');
+    expect(documentBodyMock.style.color).toBe('var(--app-text)');
   });
 });

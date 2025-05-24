@@ -15,7 +15,7 @@
       <LanguageSelector />
     </div>
     <div class="theme-toggle">
-      <svelte:component this={ThemeToggle} />
+      <ThemeToggle />
     </div>
   </div>
   

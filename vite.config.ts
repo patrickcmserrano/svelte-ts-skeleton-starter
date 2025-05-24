@@ -8,5 +8,5 @@ export default defineConfig({
     tailwindcss(),
     svelte(),
   ],
-  base: '/svelte-ts-skeleton-starter/', // Caminho base específico para o GitHub Pages
+  base: process.env.NODE_ENV === 'production' ? '/svelte-ts-skeleton-starter/' : './',
 });

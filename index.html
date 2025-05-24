@@ -1,9 +1,28 @@
 <!DOCTYPE html>
-<html data-theme="mona" lang="en">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <title>Svelte TS Skeleton Starter</title>
+    <script>
+      // Aplicar tema imediatamente no carregamento inicial
+      try {
+        const mode = localStorage.getItem('mode') || 'light';
+        document.documentElement.setAttribute('data-mode', mode);
+        
+        if (mode === 'dark') {
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-theme', 'vintage');
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.setAttribute('data-theme', 'skeleton');
+        }
+      } catch (e) {
+        document.documentElement.setAttribute('data-mode', 'light');
+        document.documentElement.setAttribute('data-theme', 'skeleton');
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>
